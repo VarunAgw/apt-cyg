@@ -20,21 +20,21 @@ _apt_cyg()
 			all_packages=$all_packages$'\n'--nodeps
 			ignored_packages=$ignored_packages$'\n'$(apt-cyg list ^$cur | sort)
 			suggested_packages=$(comm <(echo "$all_packages" | sort) <(echo "$ignored_packages" | sort) -2 -3)
-			suggested_packages=$suggested_packages | $(tr '\n' ' ')
+			suggested_packages=$(echo $suggested_packages | tr '\n' ' ')
 			COMPREPLY=($(compgen -W "$suggested_packages" -- "$cur"))
 			return 0
 		;;
 		remove)
 			all_packages=$(apt-cyg list ^$cur | sort)
 			suggested_packages=$(comm <(echo "$all_packages" | sort) <(echo "$ignored_packages" | sort) -2 -3)
-			suggested_packages=$suggested_packages | $(tr '\n' ' ')
+			suggested_packages=$(echo $suggested_packages | tr '\n' ' ')
 			COMPREPLY=($(compgen -W "$suggested_packages" -- "$cur"))
 			return 0
 		;;
 		download|show|depends|rdepends|listfiles)
 			all_packages=$(apt-cyg listall ^$cur | sort)
 			suggested_packages=$(comm <(echo "$all_packages" | sort) <(echo "$ignored_packages" | sort) -2 -3)
-			suggested_packages=$suggested_packages | $(tr '\n' ' ')
+			suggested_packages=$(echo $suggested_packages | tr '\n' ' ')
 			COMPREPLY=($(compgen -W "$suggested_packages" -- "$cur"))
 			return 0
 		;;
